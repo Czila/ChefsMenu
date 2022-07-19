@@ -1,3 +1,6 @@
+const categorieSchema = require('../db/models/Categorie')
+
+
 
 const categorieController = {
 
@@ -11,36 +14,36 @@ const categorieController = {
     },
     
     createCategorie: async (req, res) => {
-     const {nom} = res.body
+     const nom = req.body.nom
     try {
      const categorie = new categorieSchema({
         nom
      })
     
      await categorie.save()
-     return(categorie)
+     res.send(categorie)
     }
     catch(err)
     {
-        return(err.message)
+        res.send(err.message)
     }
     },
     
     updateCategorie: async (req,res) => {
         const _id = req.params.id
-        const {nom} = res.body
+        const nom = req.body.nom
     
     try {
         const categorieUpdate = await categorieSchema.findByIdAndUpdate(_id, {
             nom
         })
     
-        return categorieUpdate
+        res.send(categorieUpdate)
     }
     
         catch(err)
     {
-        return(err.message)
+        res.send(err.message)
     }
     },
     
@@ -49,14 +52,14 @@ const categorieController = {
         const _id = req.params.id
     
     try {
-        const categorieDelete = await categorieSchema.deleteOne({_id: id})
+        const categorieDelete = await categorieSchema.deleteOne({_id: _id})
     
-        return categorieDelete
+        res.send(categorieDelete)
     }
     
         catch(err)
     {
-        return(err.message)
+        res.send(err.message)
     }
     }
     }

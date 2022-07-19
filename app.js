@@ -1,12 +1,23 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
 
-var app = express();
+let indexRouter = require('./routes/index');
+let usersRouter = require('./routes/users');
+
+require('dotenv').config()
+let app = express();
+
+const {connect} = require('./db/mongodb')
+
+const DB_URL = process.env.DB_URL
+const DB_USER =  process.env.DB_USER
+const DB_PASS = process.env.DB_PASS
+const DB_NAME = process.env.DB_PASS
+
+connect(DB_URL,DB_USER,DB_PASS,DB_NAME);
 
 app.use(logger('dev'));
 app.use(express.json());

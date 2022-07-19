@@ -1,27 +1,18 @@
 let express = require('express');
 let router = express.Router();
-const categorieSchema = require('../db/models/Categorie')
+const categorieController = require('../controllers/categorieController')
+
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', categorieController.getCategories);
 
-});
+router.get('/:id', categorieController.getCategorie);
 
-router.get('/:id', function(req, res, next) {
+router.post('/', categorieController.createCategorie);
 
-});
+router.put('/:id', categorieController.updateCategorie);
 
-router.post('/', function(req, res, next) {
-
-});
-
-router.put('/:id', function(req, res, next) {
-
-});
-
-router.delete('/:id', function(req, res, next) {
-
-});
+router.delete('/:id', categorieController.deleteCategorie);
 
 
 module.exports = router;

@@ -1,28 +1,17 @@
 let express = require('express');
 let router = express.Router();
-const elementSchema = require('../db/models/Element')
-const categorieSchema = require('../db/models/Categorie')
+const elementController = require('../controllers/elementController')
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', elementController.getElements);
 
-});
+router.get('/:id', elementController.getElement);
 
-router.get('/:id', function(req, res, next) {
+router.post('/', elementController.createElement);
 
-});
+router.put('/:id', elementController.updateElement);
 
-router.post('/', function(req, res, next) {
-
-});
-
-router.put('/:id', function(req, res, next) {
-
-});
-
-router.delete('/:id', function(req, res, next) {
-
-});
+router.delete('/:id', elementController.deleteElement);
 
 
 module.exports = router;

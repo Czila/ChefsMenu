@@ -6,7 +6,9 @@ let logger = require('morgan');
 
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
-let restaurateurRouter = require('./routes/')
+let restaurateurRouter = require('./routes/');
+let elementRouter = require('./routes/element');
+let categorieRouter = require('./routes/categorie');
 
 require('dotenv').config()
 let app = express();
@@ -28,5 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/element', elementRouter);
+app.use('/categorie', categorieRouter);
 
 module.exports = app;

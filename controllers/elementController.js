@@ -1,3 +1,5 @@
+const elementSchema = require('../db/models/Element')
+
 
 const elementController = {
 
@@ -21,17 +23,18 @@ try {
  })
 
  await element.save()
- return(element)
+ res.send(element)
 }
 catch(err)
 {
-    return(err.message)
+    res.send(err.message)
 }
 },
 
 updateElement: async (req,res) => {
     const _id = req.params.id
     const {nom, prix_HT, tva, description} = req.body
+    console.log(req.params.id)
 
 try {
     const elementUpdate = await elementSchema.findByIdAndUpdate(_id, {
@@ -41,12 +44,12 @@ try {
         description
     })
 
-    return elementUpdate
+    res.send(elementUpdate)
 }
 
     catch(err)
 {
-    return(err.message)
+    res.send(err.message)
 }
 },
 
@@ -55,14 +58,14 @@ deleteElement: async (req,res) => {
     const _id = req.params.id
 
 try {
-    const elementDelete = await elementSchema.deleteOne({_id: id})
+    const elementDelete = await elementSchema.deleteOne({_id: _id})
 
-    return elementDelete
+    res.send(elementDelete)
 }
 
     catch(err)
 {
-    return(err.message)
+    res.send(err.message)
 }
 }
 }

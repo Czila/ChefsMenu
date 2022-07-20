@@ -7,8 +7,8 @@ cp: String,
 ville: String,
 image: String,
 horaire: Date,
-nbTable: Integer,
-idRestaurateur
+nbTable: Number,
+idRestaurateur: mongoose.Types.ObjectId
 })
 
 module.exports = mongoose.model("Restaurant", restaurantSchema) 

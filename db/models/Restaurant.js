@@ -8,8 +8,7 @@ ville: String,
 image: String,
 horaire: Date,
 nbTable: Integer,
-idRestaurateur,
-test
+idRestaurateur
 })
 
 module.exports = mongoose.model("Restaurant", restaurantSchema) 

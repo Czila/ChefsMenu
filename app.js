@@ -9,6 +9,8 @@ let usersRouter = require('./routes/users');
 let restaurateurRouter = require('./routes/');
 let elementRouter = require('./routes/element');
 let categorieRouter = require('./routes/categorie');
+let menuRouter = require('./routes/menu')
+let carteRouter = require('./routes/carte')
 
 require('dotenv').config()
 let app = express();
@@ -32,5 +34,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/element', elementRouter);
 app.use('/categorie', categorieRouter);
+app.use('/menu', menuRouter);
+app.use('/carte', carteRouter);
 
 module.exports = app;

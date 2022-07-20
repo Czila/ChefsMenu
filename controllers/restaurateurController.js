@@ -1,5 +1,7 @@
 const restaurateurModel = require('../db/models/Restaurateur')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+
 //controler des restaurateur
 const restaurateurController = {
     getRestaurateurs : (req,res) => {
@@ -75,7 +77,11 @@ const restaurateurController = {
         else {
             res.status(200).json({
                 userId: restaurateur._id,
-                token: 'TOKEN'
+                token: jwt.sign(
+                    { userId: restaurateur._id },
+                    'RANDOM_TOKEN_SECRET',
+                    { expiresIn: '24h' }
+                )
             });
         }
 

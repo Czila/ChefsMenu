@@ -6,7 +6,7 @@ const restaurateurController = require('../controllers/restaurateurController')
 /* GET users listing. */
 router.get('/',restaurateurController.getRestaurateurs);
 
-router.get('/login',restaurateurController.login);
+router.post('/login',restaurateurController.login);
 
 router.get('/:id',restaurateurController.getRestaurateur);
 

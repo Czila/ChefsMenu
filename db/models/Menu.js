@@ -3,7 +3,7 @@ const {default:mongoose} = require("mongoose")
 const menuSchema = new mongoose.Schema({
 nom: String,
 prix_HT: Number,
-plats: mongoose.Types.ObjectId
+plats: [mongoose.Types.ObjectId]
 
 })
 

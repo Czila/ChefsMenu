@@ -1,6 +1,6 @@
 let express = require('express');
 let router = express.Router();
-const elementController = require('../controllers/menuController')
+const menuController = require('../controllers/menuController')
 
 /* GET users listing. */
 router.get('/', menuController.getMenus);

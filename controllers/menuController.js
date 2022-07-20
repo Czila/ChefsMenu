@@ -15,7 +15,7 @@ getMenu: (req,res) => {
 createMenu: async (req, res) => {
  const {nom, prix_HT, plats} = req.body
 try {
- const element = new elementSchema({
+ const menu = new menuSchema({
     nom,
     prix_HT,
     plats

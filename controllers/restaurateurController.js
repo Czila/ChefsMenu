@@ -14,8 +14,6 @@ const restaurateurController = {
     addRestaurateur : async (req, res) => {
         const {nom,prenom,mail} = req.body
 
-        
-
         try{
             const motdepasse = await bcrypt.hash(req.body.motdepasse, 10)
             
@@ -64,7 +62,7 @@ const restaurateurController = {
     },
     login : async (req,res) => {
         const {mail,motdepasse} = req.body 
-
+        console.log(mail,motdepasse)
         const restaurateur = await restaurateurModel.findOne({mail:mail})
         if (!restaurateur){ return res.status(401).json({ message: 'Paire login/mot de passe incorrecte'}) }
         
@@ -72,13 +70,12 @@ const restaurateurController = {
 
         if (!valid) {
             return res.status(401).json({ message: 'Paire login/mot de passe incorrecte' });
-
         }
         else {
             res.status(200).json({
                 userId: restaurateur._id,
                 token: jwt.sign(
-                    { userId: restaurateur._id },
+                    { userId: restaurateur._id},
                     'RANDOM_TOKEN_SECRET',
                     { expiresIn: '24h' }
                 )

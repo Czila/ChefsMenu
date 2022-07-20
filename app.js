@@ -6,9 +6,10 @@ let logger = require('morgan');
 
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
-let restaurateurRouter = require('./routes/');
+let restaurateurRouter = require('./routes/restaurateur');
 let elementRouter = require('./routes/element');
 let categorieRouter = require('./routes/categorie');
+let cors = require('cors')
 let menuRouter = require('./routes/menu')
 let carteRouter = require('./routes/carte')
 
@@ -30,10 +31,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(cors({
+    origin: '*'
+}));
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/element', elementRouter);
 app.use('/categorie', categorieRouter);
+app.use('/restaurateur', restaurateurRouter)
 app.use('/menu', menuRouter);
 app.use('/carte', carteRouter);
 

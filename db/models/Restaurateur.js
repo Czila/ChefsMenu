@@ -7,7 +7,11 @@ const restaurateurSchema = new mongoose.Schema({
         type: String,
         unique: true // `email` dois etre unique
     },
-    motdepasse : String
-})
+    motdepasse : String,
+    compteActif : 
+    {   type : Boolean,
+        default :false}
+    
+    })
 
 module.exports = mongoose.model("Restaurateur", restaurateurSchema)

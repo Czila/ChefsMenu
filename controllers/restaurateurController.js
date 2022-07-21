@@ -1,8 +1,33 @@
 const restaurateurModel = require('../db/models/Restaurateur')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const {sendMail} = require('./../lib/mail')
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 //controler des restaurateur
+
+const formValidateMAil = (mail) => {
+    const emailVerif = RegExp(
+        /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+      );
+    return emailVerif.test(mail)
+  }
+
+  const formValidateInfo = (infos) => {
+    let good=true
+    infos.filter((info) => {if (info.length <= 0) good=false  })
+    return good
+  }
+
+  const formValidatePass = (mdp) => {
+    const passVerif = RegExp(
+        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/
+      );
+    return passVerif.test(mdp)
+  }
+
+
 const restaurateurController = {
     getRestaurateurs : (req,res) => {
         restaurateurModel.find({}).then((restaurateurs) => res.send(restaurateurs));
@@ -12,24 +37,50 @@ const restaurateurController = {
         restaurateurModel.find({_id}).then((restaurateur) => res.send(restaurateur));
     },
     addRestaurateur : async (req, res) => {
-        const {nom,prenom,mail} = req.body
+        const {nom,prenom,mail, motdepasse} = req.body
 
+        //vérification de l'email : 
+        if (!formValidateInfo([nom,prenom,mail]))
+        {
+        return res
+          .status(400)
+          .send({ success: false, message: "Merci de vérifier vos informations" });
+        }
+        
+        if (!formValidateMAil(mail)){
+            return res
+                .status(400)
+                .send({ success: false, message: "Merci de vérifier votre mail" });
+        }
+        
+        if (!formValidatePass(motdepasse)){
+            return res
+            .status(400)
+            .send({ success: false, message: "Merci de vérifier votre mot de passe" });
+        }
+        
         try{
-            const motdepasse = await bcrypt.hash(req.body.motdepasse, 10)
-            
+            const motdepasseBcrypt = await bcrypt.hash(motdepasse, 10)
             const restaurateur = new restaurateurModel({
             nom,
             prenom,
             mail,
-            motdepasse
+            motdepasse: motdepasseBcrypt
           })
-          await restaurateur.save()
-          res.send(restaurateur)
+         await restaurateur.save()
+         sendMail(restaurateur.mail, "inscription chez chef Menu", "voici le lien pour valider votre inscription.")
+         res
+         .status(200)
+         .send({ success: true, message: "Restaurateur ajouter" });
+
         }
         catch(err)
         {
-            res.send(err.message)
-        }
+            console.log(err.message)
+            res
+            .status(500)
+            .send({ success: false, message: err.message });
+        }      
       },
     updateRestaurateur : async (req,res) => {
         const {nom,prenom,mail,motdepasse} = req.body
@@ -76,7 +127,7 @@ const restaurateurController = {
                 userId: restaurateur._id,
                 token: jwt.sign(
                     { userId: restaurateur._id},
-                    'RANDOM_TOKEN_SECRET',
+                    JWT_SECRET,
                     { expiresIn: '24h' }
                 )
             });

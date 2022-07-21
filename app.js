@@ -11,6 +11,7 @@ let elementRouter = require('./routes/element');
 let categorieRouter = require('./routes/categorie');
 let menuRouter = require('./routes/menu')
 let carteRouter = require('./routes/carte')
+let restaurant = require ('./routes/restaurant');
 
 require('dotenv').config()
 let app = express();

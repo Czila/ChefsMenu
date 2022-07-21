@@ -68,7 +68,7 @@ const restaurateurController = {
             motdepasse: motdepasseBcrypt
           })
          await restaurateur.save()
-         sendMail(restaurateur.mail, "inscription chez chef Menu", "voici le lien pour valider votre inscription.")
+         sendMail(restaurateur.mail, "inscription chez chef Menu", "Bonjour, Bienvenu chez chef menu. Bonne journée")
          res
          .status(200)
          .send({ success: true, message: "Restaurateur ajouter" });
@@ -113,7 +113,9 @@ const restaurateurController = {
     },
     login : async (req,res) => {
         const {mail,motdepasse} = req.body 
-        console.log(mail,motdepasse)
+
+        if (!formValidateInfo([mail,motdepasse])){ return res.status(401).json({ message: 'Merci de saissir vos information'}) }
+        
         const restaurateur = await restaurateurModel.findOne({mail:mail})
         if (!restaurateur){ return res.status(401).json({ message: 'Paire login/mot de passe incorrecte'}) }
         

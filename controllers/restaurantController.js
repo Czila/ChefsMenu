@@ -1,6 +1,5 @@
 const restaurantSchema = require('../db/models/Restaurant')
 
-
 const restaurantController = {
 
 getRestaurants: (req,res) => {
@@ -9,7 +8,8 @@ getRestaurants: (req,res) => {
 
 getRestaurant: (req,res) => {
     const _id = req.params.id
-    restaurantSchema.find({_id}).then((restaurant)=>res.send(restaurant))
+    restaurantSchema.find({_id}).then((restaurant)=>
+    res.send(restaurant))
 },
 
 createRestaurant: async (req, res) => {

@@ -10,7 +10,6 @@ router.post('/login',restaurateurController.login);
 
 router.get('/:id',restaurateurController.getRestaurateur);
 
-
 router.post('/',restaurateurController.addRestaurateur);
 
 router.put('/:_id',restaurateurController.updateRestaurateur);

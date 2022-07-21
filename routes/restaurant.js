@@ -4,7 +4,7 @@ const restaurantController = require('../controllers/restaurantController')
 
 
 /* GET users listing. */
-router.get('/', restaurantController.getRestaurant);
+router.get('/', restaurantController.getRestaurants);
 
 router.get('/:id', restaurantController.getRestaurant);
 

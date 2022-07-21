@@ -13,7 +13,7 @@ let cors = require('cors')
 let menuRouter = require('./routes/menu')
 let carteRouter = require('./routes/carte')
 <<<<<<< HEAD
-let restaurant = require ('./routes/restaurant');
+
 =======
 let commandeRouter = require('./routes/commande')
 let restaurantRouter = require('./routes/restaurant')

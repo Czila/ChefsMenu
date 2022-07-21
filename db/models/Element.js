@@ -4,7 +4,8 @@ const elementSchema = new mongoose.Schema({
 nom: String,
 prix_HT: Number,
 tva: Number,
-description: String
+description: String,
+categorie: mongoose.Types.ObjectId
 
 })
 

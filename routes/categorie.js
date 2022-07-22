@@ -1,18 +1,18 @@
 let express = require('express');
 let router = express.Router();
 const categorieController = require('../controllers/categorieController')
-
+const Auth = require('../middleware/auth')
 
 /* GET users listing. */
-router.get('/', categorieController.getCategories);
+router.get('/', Auth, categorieController.getCategories);
 
-router.get('/:id', categorieController.getCategorie);
+router.get('/:id', Auth, categorieController.getCategorie);
 
-router.post('/', categorieController.createCategorie);
+router.post('/', Auth, categorieController.createCategorie);
 
-router.put('/:id', categorieController.updateCategorie);
+router.put('/:id', Auth, categorieController.updateCategorie);
 
-router.delete('/:id', categorieController.deleteCategorie);
+router.delete('/:id', Auth, categorieController.deleteCategorie);
 
 
 module.exports = router;

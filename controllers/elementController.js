@@ -13,14 +13,15 @@ getElement: (req,res) => {
 },
 
 createElement: async (req, res) => {
- const {nom, prix_HT, tva, description, categorie} = req.body
+ const {nom, prix_HT, tva, description, categorie, restaurant} = req.body
 try {
  const element = new elementSchema({
     nom,
     prix_HT,
     tva,
     description,
-    categorie
+    categorie,
+    restaurant
  })
 
  await element.save()
@@ -43,7 +44,8 @@ try {
         prix_HT,
         tva,
         description,
-        categorie
+        categorie, 
+        restaurant
     })
 
     res.send(elementUpdate)

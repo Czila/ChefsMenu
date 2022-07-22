@@ -1,17 +1,18 @@
 let express = require('express');
 let router = express.Router();
 const carteController = require('../controllers/carteController')
+const Auth = require('../middleware/auth')
 
 /* GET users listing. */
-router.get('/', carteController.getCartes);
+router.get('/', Auth, carteController.getCartes);
 
-router.get('/:id', carteController.getCarte);
+router.get('/:id', Auth, carteController.getCarte);
 
-router.post('/', carteController.createCarte);
+router.post('/', Auth, carteController.createCarte);
 
-router.put('/:id', carteController.updateCarte);
+router.put('/:id', Auth, carteController.updateCarte);
 
-router.delete('/:id', carteController.deleteCarte);
+router.delete('/:id', Auth, carteController.deleteCarte);
 
 
 module.exports = router;

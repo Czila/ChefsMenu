@@ -1,17 +1,18 @@
 let express = require('express');
 let router = express.Router();
 const elementController = require('../controllers/elementController')
+const Auth = require('../middleware/auth')
 
 /* GET users listing. */
-router.get('/', elementController.getElements);
+router.get('/', Auth, elementController.getElements);
 
-router.get('/:id', elementController.getElement);
+router.get('/:id', Auth, elementController.getElement);
 
-router.post('/', elementController.createElement);
+router.post('/', Auth, elementController.createElement);
 
-router.put('/:id', elementController.updateElement);
+router.put('/:id', Auth, elementController.updateElement);
 
-router.delete('/:id', elementController.deleteElement);
+router.delete('/:id', Auth, elementController.deleteElement);
 
 
 module.exports = router;

@@ -1,17 +1,18 @@
 let express = require('express');
 let router = express.Router();
 const menuController = require('../controllers/menuController')
+const Auth = require('../middleware/auth')
 
 /* GET users listing. */
-router.get('/', menuController.getMenus);
+router.get('/', Auth, menuController.getMenus);
 
-router.get('/:id', menuController.getMenu);
+router.get('/:id', Auth, menuController.getMenu);
 
-router.post('/', menuController.createMenu);
+router.post('/', Auth, menuController.createMenu);
 
-router.put('/:id', menuController.updateMenu);
+router.put('/:id', Auth, menuController.updateMenu);
 
-router.delete('/:id', menuController.deleteMenu);
+router.delete('/:id', Auth, menuController.deleteMenu);
 
 
 module.exports = router;

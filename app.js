@@ -12,8 +12,12 @@ let categorieRouter = require('./routes/categorie');
 let cors = require('cors')
 let menuRouter = require('./routes/menu')
 let carteRouter = require('./routes/carte')
+<<<<<<< HEAD
+
+=======
 let commandeRouter = require('./routes/commande')
 let restaurantRouter = require('./routes/restaurant')
+>>>>>>> 6e5aa0e6cac18149302066c0f36948755a8c0abe
 
 require('dotenv').config()
 

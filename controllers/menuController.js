@@ -13,11 +13,12 @@ getMenu: (req,res) => {
 },
 
 createMenu: async (req, res) => {
- const {nom, prix_HT, plats} = req.body
+ const {nom, prix_HT, tva, plats} = req.body
 try {
  const menu = new menuSchema({
     nom,
     prix_HT,
+    tva,
     plats
  })
 
@@ -32,13 +33,14 @@ catch(err)
 
 updateMenu: async (req,res) => {
     const _id = req.params.id
-    const {nom, prix_HT, plats} = req.body
+    const {nom, prix_HT, tva, plats} = req.body
     console.log(req.params.id)
 
 try {
     const menuUpdate = await menuSchema.findByIdAndUpdate(_id, {
         nom,
         prix_HT,
+        tva,
         plats
     })
 

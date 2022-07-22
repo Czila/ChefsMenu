@@ -5,7 +5,8 @@ nom: String,
 prix_HT: Number,
 tva: Number,
 description: String,
-categorie: mongoose.Types.ObjectId
+categorie: mongoose.Types.ObjectId,
+restaurant: mongoose.Types.ObjectId
 
 })
 

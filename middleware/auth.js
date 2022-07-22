@@ -11,8 +11,7 @@ function readToken(req) {
   if (!authorization) return null;
   let splitted = authorization.split(" ");
   let token = splitted[1];
-
-  if (token) return token;
+  if (token) return token.replace(/"/g, '');
   else return null;
 }
 
@@ -26,12 +25,14 @@ const Auth = {
         .send({ success: false, message: "Vous n'avez pas d'autorisation" });
 
     jwt.verify(token, JWT_SECRET, (error, decodedToken) => {
+ 
       if (error)
+      {
         return res
-          .status(400)
+          .status(403)
           .send({ success: false, message: "Erreur sur le token" });
-
-      let _id = decodedToken._id;
+        }
+      let _id = decodedToken.userId;
 
       Restaurateur.findOne({ _id: _id }).then((responseWithDataUserInsinde) => {
         if (responseWithDataUserInsinde === null)

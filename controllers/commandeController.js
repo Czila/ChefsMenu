@@ -14,6 +14,7 @@ getCommande: (req,res) => {
 
 getCommandesByRestaurant: (req,res) => {
     const idRestaurant = req.params.idRestaurant
+ 
     commandeSchema.find({idRestaurant}).then((commandes)=>res.send(commandes))
 },
 

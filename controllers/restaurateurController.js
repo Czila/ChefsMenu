@@ -125,13 +125,15 @@ const restaurateurController = {
             return res.status(401).json({ message: 'Paire login/mot de passe incorrecte' });
         }
         else {
+            const token =jwt.sign(
+                { userId: restaurateur._id},
+                JWT_SECRET,
+                { expiresIn: '24h' }
+            )
+            console.log(token)
             res.status(200).json({
                 userId: restaurateur._id,
-                token: jwt.sign(
-                    { userId: restaurateur._id},
-                    JWT_SECRET,
-                    { expiresIn: '24h' }
-                )
+                token: token
             });
         }
 

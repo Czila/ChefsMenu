@@ -5,6 +5,9 @@ const commandeController = require('../controllers/commandeController')
 /* GET users listing. */
 router.get('/', commandeController.getCommandes);
 
+
+router.get('/restaurant/:idRestaurant', commandeController.getCommandesByRestaurant);
+
 router.get('/:id',commandeController.getCommande );
 
 router.post('/',commandeController.createCommande);

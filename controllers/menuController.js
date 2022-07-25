@@ -13,13 +13,14 @@ getMenu: (req,res) => {
 },
 
 createMenu: async (req, res) => {
- const {nom, prix_HT, tva, plats} = req.body
+ const {nom, prix_HT, tva, plats, idRestaurateur} = req.body
 try {
  const menu = new menuSchema({
     nom,
     prix_HT,
     tva,
-    plats
+    plats,
+    idRestaurateur
  })
 
  await menu.save()
@@ -41,7 +42,8 @@ try {
         nom,
         prix_HT,
         tva,
-        plats
+        plats,
+        idRestaurateur
     })
 
     res.send(menuUpdate)

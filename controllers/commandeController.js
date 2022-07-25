@@ -15,7 +15,12 @@ getCommande: (req,res) => {
 getCommandesByRestaurant: (req,res) => {
     const idRestaurant = req.params.idRestaurant
  
-    commandeSchema.find({idRestaurant}).then((commandes)=>res.send(commandes))
+    commandeSchema.find({idRestaurant,etat:'enCours'}).then((commandes)=>
+    {
+        console.log(commandes)
+        res.send(commandes)
+    }
+    )
 },
 
 createCommande: async (req, res) => {

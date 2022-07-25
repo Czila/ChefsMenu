@@ -17,7 +17,8 @@ const categorieController = {
      const nom = req.body.nom
     try {
      const categorie = new categorieSchema({
-        nom
+        nom,
+        idRestaurateur
      })
     
      await categorie.save()
@@ -35,7 +36,8 @@ const categorieController = {
     
     try {
         const categorieUpdate = await categorieSchema.findByIdAndUpdate(_id, {
-            nom
+            nom,
+            idRestaurateur
         })
     
         res.send(categorieUpdate)

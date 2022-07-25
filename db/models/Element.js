@@ -5,9 +5,8 @@ nom: String,
 prix_HT: Number,
 tva: Number,
 description: String,
-categorie: mongoose.Types.ObjectId,
+categorie: String,
 idRestaurant: mongoose.Types.ObjectId
-
 })
 
 module.exports = mongoose.model("Element", elementSchema) 

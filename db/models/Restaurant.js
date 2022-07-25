@@ -6,7 +6,6 @@ adresse: String,
 cp: String,
 ville: String,
 image: String,
-horaire: Date,
 nbTable: Number,
 idRestaurateur: mongoose.Types.ObjectId
 })

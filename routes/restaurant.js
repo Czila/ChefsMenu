@@ -8,6 +8,8 @@ router.get('/', Auth.isUser, restaurantController.getRestaurants);
 
 router.get('/byOwner/:idOwner', Auth.isUser, restaurantController.getRestaurantsByOwner);
 
+router.post('/uploadPicture/:id', Auth.isUser,restaurantController.uploadPicture);
+
 router.get('/:id',Auth.isUser, restaurantController.getRestaurant);
 
 router.post('/',Auth.isUser, restaurantController.createRestaurant);

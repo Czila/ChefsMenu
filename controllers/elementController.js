@@ -1,5 +1,5 @@
 const elementSchema = require('../db/models/Element')
-
+const {formValidateInfo} = require('../lib/verifForm')
 
 const elementController = {
 
@@ -13,7 +13,16 @@ getElement: (req,res) => {
 },
 
 createElement: async (req, res) => {
- const {nom, prix_HT, tva, description, categorie, idRestaurateur} = req.body
+ const {nom, prix_HT, tva, description, categorie} = req.body
+ const idRestaurateur=req.user._id  
+
+ if (!formValidateInfo([nom, prix_HT, tva, description, categorie]))
+ {
+ return res
+   .status(400)
+   .send({ success: false, message: "Merci de vérifier vos informations" });
+ }
+
 try {
  const element = new elementSchema({
     nom,

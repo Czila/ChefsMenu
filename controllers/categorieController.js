@@ -1,6 +1,6 @@
 const categorieSchema = require('../db/models/Categorie')
 
-
+const {formValidateInfo} = require('../lib/verifForm')
 
 const categorieController = {
 
@@ -15,6 +15,15 @@ const categorieController = {
     
     createCategorie: async (req, res) => {
      const nom = req.body.nom
+     const idRestaurateur=req.user._id  
+
+     if (!formValidateInfo([nom,idRestaurateur]))
+     {
+     return res
+       .status(400)
+       .send({ success: false, message: "Merci de vérifier vos informations" });
+     }
+
     try {
      const categorie = new categorieSchema({
         nom,

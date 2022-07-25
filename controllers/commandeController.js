@@ -17,7 +17,6 @@ getCommandesByRestaurant: (req,res) => {
  
     commandeSchema.find({idRestaurant,etat:'enCours'}).then((commandes)=>
     {
-        console.log(commandes)
         res.send(commandes)
     }
     )

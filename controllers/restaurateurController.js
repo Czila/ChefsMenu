@@ -2,31 +2,11 @@ const restaurateurModel = require('../db/models/Restaurateur')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const {sendMail} = require('./../lib/mail')
+const {formValidateInfo,formValidateMAil,formValidatePass} = require('../lib/verifForm')
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
 //controler des restaurateur
-
-const formValidateMAil = (mail) => {
-    const emailVerif = RegExp(
-        /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-      );
-    return emailVerif.test(mail)
-  }
-
-  const formValidateInfo = (infos) => {
-    let good=true
-    infos.filter((info) => {if (info.length <= 0) good=false  })
-    return good
-  }
-
-  const formValidatePass = (mdp) => {
-    const passVerif = RegExp(
-        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[-+!*$@%_])([-+!*$@%_\w]{8,15})$/
-      );
-    return passVerif.test(mdp)
-  }
-
 
 const restaurateurController = {
     getRestaurateurs : (req,res) => {

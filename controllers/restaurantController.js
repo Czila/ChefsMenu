@@ -2,10 +2,11 @@ const restaurantSchema = require('../db/models/Restaurant')
 const path = require("path")
 const multer = require("multer")
 const fs = require('fs')
+const {formValidateInfo,formCP} = require('../lib/verifForm')
 
 let storage = multer.diskStorage({
     destination: function (req,file,cb) {
-        cb(null,"imgRestaurant")
+        cb(null,"img/imgRestaurant")
     },
     filename: function (req,file,cb) {
         cb(null,file.fieldname + ".jpg")
@@ -40,21 +41,20 @@ let upload = multer({
 
 const restaurantController = {
 
-uploadPicture: (req,res) => { 
-    //const _id = req.params.id    
-    //console.log(_id)
+uploadPicture: (req,res) => {  
+    const _id = req.params.id   
     // Error MiddleWare for multer file upload, so if any
     // error occurs, the image would not be uploaded!
+    let idRestaurant='12345605446405640dd55'
+
     upload(req,res,function(err) {
         if(err) {
-            console.log(err)
-              res.send("err")
+            res.send("err")
         }
         else {
-            console.log("upload ok")
-            res.send("Success, Image uploaded!")
-            fs.rename('imgRestaurant/myFile.jpg', 'imgRestaurant/'+_id + '.jpg', () => {
+            fs.rename('img/imgRestaurant/myFile.jpg', `img/imgRestaurant/${_id}.jpg`, () => {
                     console.log("\nFile Renamed!\n")})
+            res.send({'id':_id})
             
         }
     })
@@ -66,7 +66,6 @@ getRestaurants: (req,res) => {
 
 getRestaurantsByOwner: (req,res) => {
     const idOwner = req.params.idOwner
-    console.log(idOwner)
     restaurantSchema.find({idRestaurateur:idOwner}).then((restaurants)=>res.send(restaurants))
 },
 
@@ -77,7 +76,23 @@ getRestaurant: (req,res) => {
 },
 
 createRestaurant: async (req, res) => {
- const {nom, adresse, cp, ville, image, nbTable, idRestaurateur} = req.body
+ const {nom, adresse, cp, ville, image, nbTable } = req.body
+ const idRestaurateur=req.body.idRestaurateur.replace(/"/g, '')
+
+
+if (!formValidateInfo([nom, adresse, cp, ville, nbTable, idRestaurateur]))
+ {
+ return res
+   .status(402)
+   .send({ success: false, message: "Merci de vérifier vos informations" });
+ }
+ 
+if (!formCP(cp))
+ {
+ return res
+   .status(402)
+   .send({ success: false, message: "Merci de vérifier le code Postal" });
+ }
 
 try {
  const restaurant = new restaurantSchema({
@@ -102,8 +117,6 @@ catch(err)
 updateRestaurant: async (req,res) => {
     const _id = req.params.id
     const {nom, adresse, cp, ville, image, horaire, nbTable, idRestaurateur} = req.body
-    console.log(req.params.id)
-
 try {
     const restaurantUpdate = await restaurantSchema.findByIdAndUpdate(_id, {
         nom,

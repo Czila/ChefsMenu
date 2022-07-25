@@ -13,7 +13,7 @@ getCarte: (req,res) => {
 },
 
 createCarte: async (req, res) => {
- const {menus, plats, idRestaurateur} = req.body
+ const {menus, elements} = req.body
 try {
  const carte = new carteSchema({
     menus,

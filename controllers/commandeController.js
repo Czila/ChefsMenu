@@ -20,9 +20,7 @@ getCommandesByRestaurant: (req,res) => {
 
 createCommande: async (req, res) => {
 
- const {numTable,idRestaurant} = req.body
-    console.log(isNaN(numTable))
-    
+ const {numTable,idRestaurant} = req.body   
     // on vérifie si le numTable est bien un nombre
     if (isNaN(numTable)) 
     {
@@ -58,12 +56,11 @@ createCommande: async (req, res) => {
 
 addMenu: async (req,res) => {
     const _id = req.params.id
-    const {idMenu} = req.body
-    console.log(_id)
-//62d7ca965e61a6907b3b76db
+    const {menu} = req.body
+
 try {
     const commandeUpdate = await commandeSchema.findByIdAndUpdate(_id, {
-        $push: {menus : idMenu}
+        $push: {menus : menu}
     }, {new: true})
 
     res.send(commandeUpdate)
@@ -77,12 +74,11 @@ try {
 
 addElement: async (req,res) => {
     const _id = req.params.id
-    const {idElement} = req.body
-    console.log(_id)
+    const {element} = req.body
 
 try {
     const commandeUpdate = await commandeSchema.findByIdAndUpdate(_id, {
-        $push: {elements : idElement}
+        $push: {elements : element}
     }, {new: true})
 
     res.send(commandeUpdate)
@@ -97,7 +93,6 @@ try {
 updateCommande: async (req,res) => {
     const _id = req.params.id
     const {etat} = req.body
-    console.log(req.params.id)
 
 try {
     const commandeUpdate = await commandeSchema.findByIdAndUpdate(_id, {
@@ -118,7 +113,6 @@ deleteCommande: async (req,res) => {
 
 try {
     const commandeDelete = await commandeSchema.find({_id: _id}).remove().exec();
-    console.log(commandeDelete)
     res.send(commandeDelete)
 }
 

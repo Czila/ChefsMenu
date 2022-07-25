@@ -4,15 +4,15 @@ const menuController = require('../controllers/menuController')
 const Auth = require('../middleware/auth')
 
 /* GET users listing. */
-router.get('/', Auth, menuController.getMenus);
+router.get('/', Auth.isUser, menuController.getMenus);
 
-router.get('/:id', Auth, menuController.getMenu);
+router.get('/:id', Auth.isUser, menuController.getMenu);
 
-router.post('/', Auth, menuController.createMenu);
+router.post('/', Auth.isUser, menuController.createMenu);
 
-router.put('/:id', Auth, menuController.updateMenu);
+router.put('/:id', Auth.isUser, menuController.updateMenu);
 
-router.delete('/:id', Auth, menuController.deleteMenu);
+router.delete('/:id', Auth.isUser, menuController.deleteMenu);
 
 
 module.exports = router;

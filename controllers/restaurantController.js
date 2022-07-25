@@ -6,6 +6,12 @@ getRestaurants: (req,res) => {
     restaurantSchema.find({}).then((restaurants)=>res.send(restaurants))
 },
 
+getRestaurantsByOwner: (req,res) => {
+    const idOwner = req.params.idOwner
+    console.log(idOwner)
+    restaurantSchema.find({idRestaurateur:idOwner}).then((restaurants)=>res.send(restaurants))
+},
+
 getRestaurant: (req,res) => {
     const _id = req.params.id
     restaurantSchema.find({_id}).then((restaurant)=>

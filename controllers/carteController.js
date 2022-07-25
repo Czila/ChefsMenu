@@ -13,11 +13,12 @@ getCarte: (req,res) => {
 },
 
 createCarte: async (req, res) => {
- const {menus, plats} = req.body
+ const {menus, plats, idRestaurateur} = req.body
 try {
  const carte = new carteSchema({
     menus,
-    plats
+    plats,
+    idRestaurateur
  })
 
  await carte.save()
@@ -31,13 +32,14 @@ catch(err)
 
 updateCarte: async (req,res) => {
     const _id = req.params.id
-    const {menus, plats} = req.body
+    const {menus, plats, idRestaurateur} = req.body
     console.log(req.params.id)
 
 try {
     const carteUpdate = await carteSchema.findByIdAndUpdate(_id, {
         menus,
-        plats
+        plats,
+        idRestaurateur
     })
 
     res.send(carteUpdate)

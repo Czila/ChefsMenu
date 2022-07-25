@@ -12,9 +12,9 @@ router.get('/:id',restaurateurController.getRestaurateur);
 
 router.post('/',restaurateurController.addRestaurateur);
 
-router.put('/:_id', Auth, restaurateurController.updateRestaurateur);
+router.put('/:_id', Auth.isUser, restaurateurController.updateRestaurateur);
 
-router.delete('/:_id', Auth, restaurateurController.deleteRestaurateur);
+router.delete('/:_id', Auth.isUser, restaurateurController.deleteRestaurateur);
 
 
 module.exports = router;

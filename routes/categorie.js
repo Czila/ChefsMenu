@@ -4,15 +4,15 @@ const categorieController = require('../controllers/categorieController')
 const Auth = require('../middleware/auth')
 
 /* GET users listing. */
-router.get('/', Auth, categorieController.getCategories);
+router.get('/', Auth.isUser, categorieController.getCategories);
 
-router.get('/:id', Auth, categorieController.getCategorie);
+router.get('/:id', Auth.isUser, categorieController.getCategorie);
 
-router.post('/', Auth, categorieController.createCategorie);
+router.post('/', Auth.isUser, categorieController.createCategorie);
 
-router.put('/:id', Auth, categorieController.updateCategorie);
+router.put('/:id', Auth.isUser, categorieController.updateCategorie);
 
-router.delete('/:id', Auth, categorieController.deleteCategorie);
+router.delete('/:id', Auth.isUser, categorieController.deleteCategorie);
 
 
 module.exports = router;

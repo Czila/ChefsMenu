@@ -1,18 +1,19 @@
 let express = require('express');
 let router = express.Router();
 const restaurantController = require('../controllers/restaurantController')
-const Auth = require('../middleware/auth')
+const Auth =require('../middleware/auth')
 
 /* GET users listing. */
-router.get('/', Auth, restaurantController.getRestaurants);
+router.get('/', Auth.isUser, restaurantController.getRestaurants);
 
-router.get('/:id', Auth, restaurantController.getRestaurant);
+router.get('/byOwner/:idOwner', Auth.isUser, restaurantController.getRestaurantsByOwner);
 
-router.post('/', Auth, restaurantController.createRestaurant);
+router.get('/:id',Auth.isUser, restaurantController.getRestaurant);
 
-router.put('/:id', Auth, restaurantController.updateRestaurant);
+router.post('/',Auth.isUser, restaurantController.createRestaurant);
 
-router.delete('/:id', Auth, restaurantController.deleteRestaurant);
+router.put('/:id',Auth.isUser, restaurantController.updateRestaurant);
 
+router.delete('/:id',Auth.isUser, restaurantController.deleteRestaurant);
 
 module.exports = router;

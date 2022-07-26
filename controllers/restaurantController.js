@@ -65,12 +65,23 @@ getRestaurants: (req,res) => {
 },
 
 getRestaurantsByOwner: (req,res) => {
-    const idOwner = req.params.idOwner
-    restaurantSchema.find({idRestaurateur:idOwner}).then((restaurants)=>res.send(restaurants))
+    if (req.params.idOwner!==null) 
+    {
+        const idOwner = req.params.idOwner.replace(/"/g, '')
+        restaurantSchema.find({idRestaurateur:idOwner}).then((restaurants)=>res.send(restaurants))
+    }
+    else
+    {
+        return res
+                .status(400)
+                .send({ success: false, message: "erreur de type de donnée" });
+    }
+
 },
 
 getRestaurant: (req,res) => {
     const _id = req.params.id
+    console.log(_id)
     restaurantSchema.find({_id}).then((restaurant)=>
     res.send(restaurant))
 },

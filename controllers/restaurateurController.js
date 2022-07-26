@@ -13,8 +13,18 @@ const restaurateurController = {
         restaurateurModel.find({}).then((restaurateurs) => res.send(restaurateurs));
     },   
     getRestaurateur : (req,res) => {
-        const _id = req.params.id
-        restaurateurModel.find({_id}).then((restaurateur) => res.send(restaurateur));
+        
+        if (req.params.id!==null) 
+        {
+            const _id = req.params.id.replace(/"/g, '')
+            restaurateurModel.find({_id}).then((restaurateur) => res.send(restaurateur));
+        }
+        else
+        {
+            return res
+                    .status(400)
+                    .send({ success: false, message: "erreur de type de donnée" });
+        }
     },
     addRestaurateur : async (req, res) => {
         const {nom,prenom,mail, motdepasse} = req.body
@@ -33,11 +43,11 @@ const restaurateurController = {
                 .send({ success: false, message: "Merci de vérifier votre mail" });
         }
         
-        if (!formValidatePass(motdepasse)){
+        /*if (!formValidatePass(motdepasse)){
             return res
             .status(400)
             .send({ success: false, message: "Merci de vérifier votre mot de passe" });
-        }
+        }*/
         
         try{
             const motdepasseBcrypt = await bcrypt.hash(motdepasse, 10)

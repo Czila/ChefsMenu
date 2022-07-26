@@ -1,5 +1,5 @@
 const menuSchema = require('../db/models/Menu')
-
+const {formValidateInfo,formCP} = require('../lib/verifForm')
 
 const menuController = {
 
@@ -13,22 +13,33 @@ getMenu: (req,res) => {
 },
 
 createMenu: async (req, res) => {
- const {nom, prix_HT, tva, elements} = req.body
-try {
- const menu = new menuSchema({
-    nom,
-    prix_HT,
-    tva,
-    elements
- })
+ const {nom, prix_HT, remise, idRestaurant,elements} = req.body
 
- await menu.save()
- res.send(menu)
-}
-catch(err)
-{
-    res.send(err.message)
-}
+console.log([nom, prix_HT, remise, idRestaurant, elements])
+
+    if (!formValidateInfo([nom, prix_HT, remise,  idRestaurant,elements]))
+    {
+    return res
+     .status(400)
+        .send({ success: false, message: "Merci de vérifier vos informations" });
+    }
+
+    try {
+    const menu = new menuSchema({
+        nom,
+        prix_HT,
+        remise,
+        elements,
+        idRestaurant
+    })
+
+    await menu.save()
+    res.send(menu)
+    }
+    catch(err)
+    {
+        res.send(err.message)
+    }
 },
 
 updateMenu: async (req,res) => {

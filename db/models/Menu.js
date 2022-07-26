@@ -4,8 +4,9 @@ const elementSchema = require('../models/Element')
 const menuSchema = new mongoose.Schema({
 nom: String,
 prix_HT: Number,
-tva: Number,
-elements: [elementSchema.schema]
+remise:Number,
+elements: [elementSchema.schema],
+idRestaurant : mongoose.Types.ObjectId
 
 })
 

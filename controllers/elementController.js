@@ -12,11 +12,26 @@ getElement: (req,res) => {
     elementSchema.find({_id}).then((element)=>res.send(element))
 },
 
+getElementByRestaurant : (req,res) => {
+    const idRestaurant = req.params.idRestaurant
+            
+    if (!formValidateInfo([idRestaurant]))
+    {
+    return res
+      .status(400)
+      .send({ success: false, message: "erreur ID" });
+    }
+
+    elementSchema.find({idRestaurant}).then((element)=>res.send(element))
+
+
+},
+
 createElement: async (req, res) => {
- const {nom, prix_HT, tva, description, categorie} = req.body
+ const {nom, prix_HT, tva, description, categorie,idRestaurant} = req.body
  const idRestaurateur=req.user._id  
 
- if (!formValidateInfo([nom, prix_HT, tva, description, categorie]))
+ if (!formValidateInfo([nom, prix_HT, tva, description, categorie,idRestaurant]))
  {
  return res
    .status(400)
@@ -30,7 +45,7 @@ try {
     tva,
     description,
     categorie,
-    idRestaurateur
+    idRestaurant
  })
 
  await element.save()

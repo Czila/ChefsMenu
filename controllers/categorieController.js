@@ -1,11 +1,22 @@
 const categorieSchema = require('../db/models/Categorie')
-
 const {formValidateInfo} = require('../lib/verifForm')
 
 const categorieController = {
 
     getCategories: (req,res) => {
         categorieSchema.find({}).then((categories)=>res.send(categories))
+    },
+    getCategoriesByRestaurant: (req,res) => {
+        const idRestaurant = req.params.idRestaurant
+        
+        if (!formValidateInfo([idRestaurant]))
+        {
+        return res
+          .status(400)
+          .send({ success: false, message: "erreur ID" });
+        }
+
+        categorieSchema.find({idRestaurant}).then((categories)=>res.send(categories))
     },
     
     getCategorie: (req,res) => {
@@ -14,10 +25,10 @@ const categorieController = {
     },
     
     createCategorie: async (req, res) => {
-     const nom = req.body.nom
-     const idRestaurateur=req.user._id  
+     const {nom, idRestaurant } = req.body
+     
 
-     if (!formValidateInfo([nom,idRestaurateur]))
+     if (!formValidateInfo([nom,idRestaurant]))
      {
      return res
        .status(400)
@@ -27,7 +38,7 @@ const categorieController = {
     try {
      const categorie = new categorieSchema({
         nom,
-        idRestaurateur
+        idRestaurant
      })
     
      await categorie.save()
@@ -41,12 +52,12 @@ const categorieController = {
     
     updateCategorie: async (req,res) => {
         const _id = req.params.id
-        const nom = req.body.nom
+        const {nom, idRestaurant } = req.body
     
     try {
         const categorieUpdate = await categorieSchema.findByIdAndUpdate(_id, {
             nom,
-            idRestaurateur
+            idRestaurant
         })
     
         res.send(categorieUpdate)

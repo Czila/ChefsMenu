@@ -12,6 +12,8 @@ router.post('/', Auth.isUser, elementController.createElement);
 
 router.put('/:id', Auth.isUser, elementController.updateElement);
 
+router.get('/ByRestaurant/:idRestaurant', Auth.isUser, elementController.getElementByRestaurant);
+
 router.delete('/:id', Auth.isUser, elementController.deleteElement);
 
 

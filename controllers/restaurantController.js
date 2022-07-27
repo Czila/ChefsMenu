@@ -1,4 +1,5 @@
 const restaurantSchema = require('../db/models/Restaurant')
+const categorieSchema = require('../db/models/Categorie')
 const path = require("path")
 const multer = require("multer")
 const fs = require('fs')
@@ -117,11 +118,14 @@ try {
  })
 
  await restaurant.save()
+ 
  res.send(restaurant)
+ 
 }
 catch(err)
 {
-    res.send()
+     res.send(err.message)
+    
 }
 },
 

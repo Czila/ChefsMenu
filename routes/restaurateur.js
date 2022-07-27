@@ -12,6 +12,10 @@ router.get('/:id',restaurateurController.getRestaurateur);
 
 router.post('/',restaurateurController.addRestaurateur);
 
+router.post('/resetpass',restaurateurController.mdpResetSendMail);
+
+router.post('/resetpassjwt',restaurateurController.mdpResetJWT);
+
 router.put('/:_id', Auth.isUser, restaurateurController.updateRestaurateur);
 
 router.delete('/:_id', Auth.isUser, restaurateurController.deleteRestaurateur);

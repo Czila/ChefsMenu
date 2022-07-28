@@ -6,7 +6,6 @@ const {formValidateInfo,formValidateMAil,formValidatePass} = require('../lib/ver
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
-//controler des restaurateur
 
 const restaurateurController = {
     getRestaurateurs : (req,res) => {
@@ -26,6 +25,46 @@ const restaurateurController = {
                     .send({ success: false, message: "erreur de type de donnée" });
         }
     },
+
+    updatePassword : async (req,res) => {
+        const {mdp} = req.body
+        const _id = req.params.id
+
+        if (!formValidateInfo([mdp.mdp1,mdp.mdp2]))
+        {
+        return res
+          .status(400)
+          .send({ success: false, message: "Merci de vérifier votre mot de passe" });
+        }        
+        if((mdp.mdp1.length<=8)||(mdp.mdp2.length<=8)) 
+        {
+            return res
+            .status(400)
+            .send({ success: false, message: "Mot de passe trop petit" });
+        }     
+        if((mdp.mdp1)!==(mdp.mdp2)) 
+        {
+            return res
+            .status(400)
+            .send({ success: false, message: "Les mots de passe sont différents" });
+        } 
+
+        
+        try {
+            const motdepasseBcrypt = await bcrypt.hash(mdp.mdp1, 10)
+            const restaurtateurUpdate = await restaurateurModel.findByIdAndUpdate(_id,{
+                motdepasse: motdepasseBcrypt
+          })
+
+             res.send(restaurtateurUpdate)
+        }
+        catch(err)
+        {
+            res.send(err.message)
+        }
+
+    },
+
     addRestaurateur : async (req, res) => {
         const {nom,prenom,mail, motdepasse} = req.body
 
@@ -42,12 +81,6 @@ const restaurateurController = {
                 .status(400)
                 .send({ success: false, message: "Merci de vérifier votre mail" });
         }
-        
-        /*if (!formValidatePass(motdepasse)){
-            return res
-            .status(400)
-            .send({ success: false, message: "Merci de vérifier votre mot de passe" });
-        }*/
         
         try{
             const motdepasseBcrypt = await bcrypt.hash(motdepasse, 10)
@@ -110,7 +143,7 @@ const restaurateurController = {
             {
               return res
                 .status(400)
-                .send({ success: false, message: "Erreur sur le token" });
+                .send({ success: false, message: "Erreur votre jeton n'est plus valide merci de refaire la procédure" });
               }
             let _id = decodedToken._id;
             restaurateurModel.findOne({ _id: _id  }).then((responseWithDataUserInsinde) => {
@@ -137,7 +170,7 @@ const restaurateurController = {
                     const tokenPass =jwt.sign(
                         { _id: restaurateur[0]._id},
                         JWT_SECRET,
-                        { expiresIn: '24h' }
+                        { expiresIn: '1h' }
                     )
                     sendMail(restaurateur[0].mail, "Mot de passe oublier", "Voici le lien pour changer le votre mot de passe http://localhost:3000/changePass/" + tokenPass)
                     res.status(200).send(restaurateur)

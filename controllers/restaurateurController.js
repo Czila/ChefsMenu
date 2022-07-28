@@ -104,22 +104,19 @@ const restaurateurController = {
 
     mdpResetJWT: async (req, res)=> {
         const {token} = req.body
-        if (token)
-     
+        if (token)    
         jwt.verify(token, JWT_SECRET, (error, decodedToken) => {
- 
             if (error)
             {
               return res
-                .status(403)
+                .status(400)
                 .send({ success: false, message: "Erreur sur le token" });
               }
             let _id = decodedToken._id;
-            console.log(decodedToken)
             restaurateurModel.findOne({ _id: _id  }).then((responseWithDataUserInsinde) => {
               if (responseWithDataUserInsinde === null)
                 return res
-                  .status(404)
+                  .status(400)
                   .send({ success: false, message: "Pas de restaurateur associé" });
                   
                   return res

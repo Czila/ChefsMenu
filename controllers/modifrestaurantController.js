@@ -87,7 +87,7 @@ getModifRestaurant: (req,res) => {
     res.send(modifrestaurant))
 },
 
-createmodifRestaurant: async (req, res) => {
+createModifRestaurant: async (req, res) => {
  const {nom, adresse, cp, ville, image, nbTable } = req.body
  const idRestaurateur=req.body.idRestaurateur.replace(/"/g, '')
 
@@ -129,7 +129,7 @@ catch(err)
 }
 },
 
-updatemodifRestaurant: async (req,res) => {
+updateModifRestaurant: async (req,res) => {
     const _id = req.params.id
     const {nom, adresse, cp, ville, image, horaire, nbTable, idRestaurateur} = req.body
 try {
@@ -154,7 +154,7 @@ try {
 },
 
 
-deletemodifRestaurant: async (req,res) => {
+deleteModifRestaurant: async (req,res) => {
     const _id = req.params.id
 
 try {

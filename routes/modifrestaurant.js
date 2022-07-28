@@ -10,12 +10,12 @@ router.get('/byOwner/:idOwner', Auth.isUser, modifrestaurantController.getmodifR
 
 router.post('/uploadPicture/:id',Auth.isUser,modifrestaurantController.uploadPicture);
 
-router.get('/:id',Auth.isUser, modifrestaurantController.getmodifRestaurant);
+router.get('/:id',Auth.isUser, modifrestaurantController.getModifRestaurant);
 
-router.post('/',Auth.isUser, modifrestaurantController.createmodifRestaurant);
+router.put('/',Auth.isUser, modifrestaurantController.createModifRestaurant);
 
-router.put('/:id',Auth.isUser, modifrestaurantController.updatemodifRestaurant);
+router.put('/:id',Auth.isUser, modifrestaurantController.updateModifRestaurant);
 
-router.delete('/:id',Auth.isUser, modifrestaurantController.deletemodifRestaurant);
+router.delete('/:id',Auth.isUser, modifrestaurantController.deleteModifRestaurant);
 
 module.exports = router;

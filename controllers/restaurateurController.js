@@ -161,21 +161,25 @@ const restaurateurController = {
 
     mdpResetSendMail : async (req,res) => {
         const {mail} = req.body 
-
+        
         if (mail)
         {
             restaurateurModel.find({mail}).then((restaurateur) => 
             {
-                if (restaurateur) {
+
+                
+                if (restaurateur.length>0) {
                     const tokenPass =jwt.sign(
                         { _id: restaurateur[0]._id},
                         JWT_SECRET,
                         { expiresIn: '1h' }
                     )
-                    sendMail(restaurateur[0].mail, "Mot de passe oublier", "Voici le lien pour changer le votre mot de passe http://localhost:3000/changePass/" + tokenPass)
+                    sendMail(restaurateur[0].mail, "Mot de passe oublié", "Voici le lien pour changer le votre mot de passe http://localhost:3000/changePass/" + tokenPass)
                     res.status(200).send(restaurateur)
                 }
-                else {res.status(400).send('mail inconnu')}
+                else {res.status(400).send({ success: false, message: "Mail inconnu" })
+                console.log('err')
+            }
 
             })
         }

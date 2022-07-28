@@ -22,7 +22,7 @@ getElementByRestaurant : (req,res) => {
       .send({ success: false, message: "erreur ID" });
     }
 
-    elementSchema.find({idRestaurant}).then((element)=>res.send(element))
+    elementSchema.find({idRestaurant}).sort('categorie').then((element)=>res.send(element))
 
 
 },

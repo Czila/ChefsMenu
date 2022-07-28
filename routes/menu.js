@@ -8,6 +8,8 @@ router.get('/', Auth.isUser, menuController.getMenus);
 
 router.get('/:id', Auth.isUser, menuController.getMenu);
 
+router.get('/ByRestaurant/:idRestaurant', Auth.isUser, menuController.getMenuByRestaurant);
+
 router.post('/', Auth.isUser, menuController.createMenu);
 
 router.put('/:id', Auth.isUser, menuController.updateMenu);

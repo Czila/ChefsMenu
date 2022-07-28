@@ -13,12 +13,12 @@ getCarte: (req,res) => {
 },
 
 createCarte: async (req, res) => {
- const {menus, elements} = req.body
+ const {menus, elements,idRestaurant} = req.body
 try {
  const carte = new carteSchema({
     menus,
     elements,
-    idRestaurateur
+    idRestaurant
  })
  
  await carte.save()

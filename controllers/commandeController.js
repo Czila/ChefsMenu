@@ -1,6 +1,4 @@
 const commandeSchema = require('../db/models/Commande')
-
-
 const commandeController = {
 
 getCommandes: (req,res) => {

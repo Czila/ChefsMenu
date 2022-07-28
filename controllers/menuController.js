@@ -12,6 +12,19 @@ getMenu: (req,res) => {
     menuSchema.find({_id}).then((menu)=>res.send(menu))
 },
 
+
+getMenuByRestaurant: (req,res) => {
+    const idRestaurant = req.params.idRestaurant
+            
+    if (!formValidateInfo([idRestaurant]))
+    {
+    return res
+      .status(400)
+      .send({ success: false, message: "erreur ID" });
+    }
+    menuSchema.find({idRestaurant}).then((menu)=>res.send(menu))
+},
+
 createMenu: async (req, res) => {
  const {nom, prix_HT, remise, idRestaurant,elements} = req.body
 

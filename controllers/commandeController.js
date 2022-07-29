@@ -19,6 +19,18 @@ getCommandesByRestaurant: (req,res) => {
     }
     )
 },
+getCommandesByRestaurantByTable: (req,res) => {
+    const {idRestaurant,numTable} = req.params
+    console.log(req.params.idRestaurant)
+    console.log(req.params.numTable)
+    commandeSchema.findOne({idRestaurant:idRestaurant,etat:'enCours',numTable}).then((commandes)=>
+    {
+        console.log(commandes,'co')
+        res.send(commandes)
+        
+    }
+    )
+},
 
 createCommande: async (req, res) => {
 
@@ -31,7 +43,7 @@ createCommande: async (req, res) => {
                 .send({ success: false, message: "erreur de type de donnée" });
     }
     
-    if (((await commandeSchema.find({numTable:numTable,etat:'enCours'})).length) > 0) 
+    if (((await commandeSchema.find({numTable:numTable,etat:'enCours',idRestaurant:idRestaurant})).length) > 0) 
     {
         return res
         .status(400)
@@ -70,6 +82,7 @@ try {
 
     catch(err)
 {
+    console.log(err.message)
     res.send(err.message)
 }
 },

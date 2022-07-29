@@ -1,24 +1,23 @@
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-let express = require('express');
-let path = require('path');
-let cookieParser = require('cookie-parser');
-let logger = require('morgan');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const restaurateurRouter = require('./routes/restaurateur');
+const elementRouter = require('./routes/element');
+const categorieRouter = require('./routes/categorie');
+const cors = require('cors')
+const menuRouter = require('./routes/menu')
+const carteRouter = require('./routes/carte')
 
-let indexRouter = require('./routes/index');
-let usersRouter = require('./routes/users');
-let restaurateurRouter = require('./routes/restaurateur');
-let elementRouter = require('./routes/element');
-let categorieRouter = require('./routes/categorie');
-let cors = require('cors')
-let menuRouter = require('./routes/menu')
-let carteRouter = require('./routes/carte')
-
-let commandeRouter = require('./routes/commande')
-let restaurantRouter = require('./routes/restaurant')
+const commandeRouter = require('./routes/commande')
+const restaurantRouter = require('./routes/restaurant')
 
 require('dotenv').config()
 
-let app = express();
+const app = express();
 
 const {connect} = require('./db/mongodb')
 
@@ -26,6 +25,8 @@ const DB_URL = process.env.DB_URL
 const DB_USER =  process.env.DB_USER
 const DB_PASS = process.env.DB_PASS
 const DB_NAME = process.env.DB_PASS
+
+
 
 connect(DB_URL,DB_USER,DB_PASS,DB_NAME);
 

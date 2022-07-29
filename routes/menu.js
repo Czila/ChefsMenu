@@ -8,7 +8,7 @@ router.get('/', Auth.isUser, menuController.getMenus);
 
 router.get('/:id', Auth.isUser, menuController.getMenu);
 
-router.get('/ByRestaurant/:idRestaurant', Auth.isUser, menuController.getMenuByRestaurant);
+router.get('/ByRestaurant/:idRestaurant', menuController.getMenuByRestaurant);
 
 router.post('/', Auth.isUser, menuController.createMenu);
 

@@ -61,6 +61,19 @@ uploadPicture: (req,res) => {
     })
 },
 
+getPicture : (req,res) => {
+    const fs = require('fs')
+    const _id = req.params.id  
+    const file = path.join(__dirname,`/../img/imgRestaurant/${_id}.jpg`)
+      if (_id) {
+        if (!fs.existsSync(file)) 
+        res.sendFile(__dirname,`/../img/imgRestaurant/defaut.jpg`)
+        else 
+        res.sendFile(file)
+      }
+      else res.status(403).send("Sorry! You can't see that.")
+},
+
 getRestaurants: (req,res) => {
     restaurantSchema.find({}).then((restaurants)=>res.send(restaurants))
 },

@@ -4,13 +4,15 @@ const restaurantController = require('../controllers/restaurantController')
 const Auth =require('../middleware/auth')
 
 /* GET users listing. */
-router.get('/', Auth.isUser, restaurantController.getRestaurants);
+router.get('/', restaurantController.getRestaurants);
 
 router.get('/byOwner/:idOwner', Auth.isUser, restaurantController.getRestaurantsByOwner);
 
 router.post('/uploadPicture/:id',Auth.isUser,restaurantController.uploadPicture);
 
-router.get('/:id',Auth.isUser, restaurantController.getRestaurant);
+router.get('/:id',restaurantController.getRestaurant);
+
+router.get('/getPicture/:id', restaurantController.getPicture);
 
 router.post('/',Auth.isUser, restaurantController.createRestaurant);
 

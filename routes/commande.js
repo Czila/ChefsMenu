@@ -8,6 +8,8 @@ router.get('/', commandeController.getCommandes);
 
 router.get('/restaurant/:idRestaurant', commandeController.getCommandesByRestaurant);
 
+router.get('/checkTable/:idRestaurant/:numTable', commandeController.getCommandesByRestaurantByTable);
+
 router.get('/:id',commandeController.getCommande );
 
 router.post('/',commandeController.createCommande);
